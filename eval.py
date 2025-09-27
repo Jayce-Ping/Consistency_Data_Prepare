@@ -111,7 +111,7 @@ def eval(prompt_metadata_file, image_dir, result_file):
         metadatas = [m for m in metadatas if m['idx'] not in existing_indices]
         print(f"Resuming from existing results, {len(existing_indices)} entries found, {len(metadatas)} remaining to process.")
 
-    batch_size = 4
+    batch_size = 2
 
     batches = []
     for i, metadata in enumerate(metadatas):

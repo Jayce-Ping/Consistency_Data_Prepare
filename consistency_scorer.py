@@ -149,7 +149,7 @@ class ConsistencyScorer:
                 # Compute scores for each prompt-image pair from different dimensions
                 for dimension in dimensions:
                     # Get criteria for this dimension
-                    dimension_criteria = criteria_info[dimension][0]
+                    dimension_criteria = criteria_info[dimension]
                     criteria_texts = [c_t for c_t in dimension_criteria.values() if c_t]
 
                     # [criteria1_scores : list[float], criteria2_scores : list[float], ...]
