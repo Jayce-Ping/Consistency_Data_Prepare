@@ -91,16 +91,19 @@ def eval(prompt_metadata_file, image_dir, result_file):
     with open(prompt_metadata_file) as f:
         metadatas = json.load(f)
     
-    model = 'local_model'
+    # model = 'GLM-4.1V-9B-Thinking'
+    # model = "Qwen2.5-VL-7B-Instruct"
+    model = 'InternVL3_5-8B'
+    thinking = False
     consistency_scorer = ConsistencyScorer(
         model=model,
         criteria_path='data/prompt_consistency_criterion.json',
-        thinking=False,
+        thinking=thinking,
     )
     subfigclip_scorer = SubfigClipTScorer(device='cuda' if torch.cuda.is_available() else 'cpu')
     layout_scorer = GridLayoutScorer(
         model=model,
-        thinking=False,
+        thinking=thinking,
     )
     # Load existing results
     if os.path.exists(result_file):
