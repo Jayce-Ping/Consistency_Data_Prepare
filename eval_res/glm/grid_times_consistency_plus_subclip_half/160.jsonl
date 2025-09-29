@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"idx": "0001_0001", "consistency_scores": 0.6162432471094305, "subfigclip_scores": 0.30750197172164917, "layout_scores": 1.0}
 {"idx": "0001_0002", "consistency_scores": 0.8452741088655285, "subfigclip_scores": 0.3486686944961548, "layout_scores": 1.0}
 {"idx": "0001_0003", "consistency_scores": 0.994532862670348, "subfigclip_scores": 0.3673676550388336, "layout_scores": 1.0}
@@ -128,3 +129,10 @@
 {"idx": "0006_0011", "consistency_scores": 0.47159809750229803, "subfigclip_scores": 0.2878147065639496, "layout_scores": 1.0}
 {"idx": "0006_0012", "consistency_scores": 0.2850205528883002, "subfigclip_scores": 0.39648905396461487, "layout_scores": 1.0}
 {"idx": "0006_0013", "consistency_scores": 0.5595920763137062, "subfigclip_scores": 0.33511781692504883, "layout_scores": 1.0}
+=======
+{"idx": "0001_0001", "consistency_scores": 0.6077940339334094, "subfigclip_scores": 0.30718085169792175, "layout_scores": 1.0}
+{"idx": "0001_0002", "consistency_scores": 0.8543654903767862, "subfigclip_scores": 0.34900185465812683, "layout_scores": 1.0}
+{"idx": "0001_0003", "consistency_scores": 0.9945617036773796, "subfigclip_scores": 0.3674064874649048, "layout_scores": 1.0}
+{"idx": "0001_0004", "consistency_scores": 0.6154417692739119, "subfigclip_scores": 0.36710965633392334, "layout_scores": 1.0}
+>>>>>>> refs/remotes/origin/main
+{"idx": "0006_0014", "consistency_scores": 0.3125227908745109, "subfigclip_scores": 0.23130731284618378, "layout_scores": 0.0}

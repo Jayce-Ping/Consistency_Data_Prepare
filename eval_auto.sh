@@ -11,6 +11,7 @@ image_root_dir=/data/pbw/Flow_GRPO/images
 #     --image_dir ${image_root_dir}/base/0 \
 #     --result_file eval_res/${model}/base/0.jsonl
 
+
 label=grid_times_consistency_plus_subclip_half
 
 for epoch in {160..240..40}; do
@@ -19,8 +20,8 @@ for epoch in {160..240..40}; do
         --result_file eval_res/${model}/${label}/${epoch}.jsonl
 done
 
-
-# label=grid_consistency_subclip_half_flexible_leq4
+label=grid_consistency_subclip_half_flexible_leq4
+echo "Evaluating ${label}"
 
 # for epoch in {80..220..20}; do
 #     python eval.py \
@@ -30,7 +31,7 @@ done
 
 
 label=grid_consistency_subclip_half
-
+echo "Evaluating ${label}"
 for epoch in 60 80 120; do
     python eval.py \
         --image_dir ${image_root_dir}/${label}/${epoch} \
@@ -38,7 +39,7 @@ for epoch in 60 80 120; do
 done
 
 label=grid_consistency_subclip_extended_73
-
+echo "Evaluating ${label}"
 for epoch in {40..320..40}; do
     python eval.py \
         --image_dir ${image_root_dir}/${label}/${epoch} \
@@ -46,7 +47,7 @@ for epoch in {40..320..40}; do
 done
 
 label=consistency_subclipT_half
-
+echo "Evaluating ${label}"
 for epoch in {81..121..20}; do
     python eval.py \
         --image_dir ${image_root_dir}/${label}/${epoch} \
