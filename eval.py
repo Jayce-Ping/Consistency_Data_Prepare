@@ -91,10 +91,10 @@ def eval(prompt_metadata_file, image_dir, result_file):
     with open(prompt_metadata_file) as f:
         metadatas = json.load(f)
     
-    # model = 'GLM-4.1V-9B-Thinking'
+    model = 'GLM-4.1V-9B-Thinking'
     # model = "Qwen2.5-VL-7B-Instruct"
-    model = 'InternVL3_5-8B'
-    thinking = False
+    # model = 'InternVL3_5-8B'
+    thinking = True
     consistency_scorer = ConsistencyScorer(
         model=model,
         criteria_path='data/prompt_consistency_criterion.json',
@@ -114,7 +114,7 @@ def eval(prompt_metadata_file, image_dir, result_file):
         metadatas = [m for m in metadatas if m['idx'] not in existing_indices]
         print(f"Resuming from existing results, {len(existing_indices)} entries found, {len(metadatas)} remaining to process.")
 
-    batch_size = 2
+    batch_size = 1
 
     batches = []
     for i, metadata in enumerate(metadatas):
