@@ -85,8 +85,8 @@ def image_gen(prompt_metadata_file : str, model_path : str, model_type = None, o
             max_sequence_length=max_sequence_length,
             num_images_per_prompt=num_images_per_prompt
         )
-        image = output.images[0]
-        image.save(output_image_path)
+        for img_id, image in enumerate(output.images):
+            image.save(os.path.join(output_dir, f"{idx}_{img_id}.png"))
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Generate images")
