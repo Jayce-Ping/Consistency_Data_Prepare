@@ -2,24 +2,26 @@ export CUDA_VISIBLE_DEVICES=0
 export HF_HUB_OFFLINE=1
 # model=qwen2_5
 # model=internvl3
-model=internvl3_5
-# model=glm
+# model=internvl3_5
+model=glm
 image_root_dir=/root/siton-data-51d3ce9aba3246f88f64ea65f79d5133/images
 
+echo "Evaluating base"
 python eval.py \
     --image_dir ${image_root_dir}/base/0 \
     --result_file eval_res/${model}/base/0.jsonl
 
-label=grid_times_consistency_plus_subclip_half
 
+label=grid_times_consistency_plus_subclip_half
+echo "Evaluating ${label}"
 for epoch in {40..240..40}; do
     python eval.py \
         --image_dir ${image_root_dir}/${label}/${epoch} \
         --result_file eval_res/${model}/${label}/${epoch}.jsonl
 done
 
-
 label=grid_consistency_subclip_half_flexible_leq4
+echo "Evaluating ${label}"
 
 for epoch in {80..220..20}; do
     python eval.py \
@@ -29,7 +31,7 @@ done
 
 
 label=grid_consistency_subclip_half
-
+echo "Evaluating ${label}"
 for epoch in 60 80 120; do
     python eval.py \
         --image_dir ${image_root_dir}/${label}/${epoch} \
@@ -37,7 +39,7 @@ for epoch in 60 80 120; do
 done
 
 label=grid_consistency_subclip_extended_73
-
+echo "Evaluating ${label}"
 for epoch in {40..320..40}; do
     python eval.py \
         --image_dir ${image_root_dir}/${label}/${epoch} \
@@ -45,7 +47,7 @@ for epoch in {40..320..40}; do
 done
 
 label=consistency_subclipT_half
-
+echo "Evaluating ${label}"
 for epoch in {81..121..20}; do
     python eval.py \
         --image_dir ${image_root_dir}/${label}/${epoch} \
