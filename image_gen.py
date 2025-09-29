@@ -30,7 +30,7 @@ def load_sd3_pipeline(model_path, **load_kwargs):
 
     return pipeline
 
-def image_gen(prompt_metadata_file : str, model_path : str, model_type = None, output_dir : str = 'output', lora_path: str = None):
+def image_gen(prompt_metadata_file : str, model_path : str, model_type = None, output_dir : str = 'output', lora_path: str = None, num_images_per_prompt: int = 1):
     load_kwargs = {
         'device_map': 'balanced',
         'torch_dtype': torch.bfloat16
@@ -58,8 +58,13 @@ def image_gen(prompt_metadata_file : str, model_path : str, model_type = None, o
     os.makedirs(output_dir, exist_ok=True)
     inference_steps = 20 if model_type == 'flux' else 40
     batch_size = 4
-    prompt_metadata = load_json(prompt_metadata_file)
-
+    file_ext = os.path.splitext(prompt_metadata_file)[1]
+    if file_ext == '.json':
+        prompt_metadata = load_json(prompt_metadata_file)
+    elif file_ext == '.jsonl':
+        prompt_metadata = [json.loads(line) for line in open(prompt_metadata_file, 'r')]
+    else:
+        raise ValueError("Unsupported file format. Please use .json or .jsonl")
 
     # Since each image may have different height/width, we cannot directly use batch inference here.
     for metadata in tqdm(prompt_metadata):
@@ -77,7 +82,8 @@ def image_gen(prompt_metadata_file : str, model_path : str, model_type = None, o
             height=h,
             width=w,
             num_inference_steps=inference_steps,
-            max_sequence_length=max_sequence_length
+            max_sequence_length=max_sequence_length,
+            num_images_per_prompt=num_images_per_prompt
         )
         image = output.images[0]
         image.save(output_image_path)
@@ -89,12 +95,13 @@ def parse_args():
     parser.add_argument('--prompt', default='data/prompt.json')
     parser.add_argument('--output_dir', default='output')
     parser.add_argument('--lora_path', default=None, help='Path to LoRA folder')
+    parser.add_argument('--num_images_per_prompt', type=int, default=1)
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    image_gen(args.prompt, args.model, args.model_type, args.output_dir, args.lora_path)
+    image_gen(args.prompt, args.model, args.model_type, args.output_dir, args.lora_path, args.num_images_per_prompt)
 
 if __name__ == '__main__':
     main()
