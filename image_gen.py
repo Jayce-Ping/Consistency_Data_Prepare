@@ -74,18 +74,29 @@ def image_gen(prompt_metadata_file : str, model_path : str, model_type = None, o
         w = metadata['width']
         max_sequence_length = 512
         seed = metadata.get('seed', None)
-        output_image_path = os.path.join(output_dir, f"{idx}.png")
 
-        output = pipeline(
-            prompt=prompt,
-            guidance_scale=3.5,
-            height=h,
-            width=w,
-            num_inference_steps=inference_steps,
-            max_sequence_length=max_sequence_length,
-            num_images_per_prompt=num_images_per_prompt
-        )
-        for img_id, image in enumerate(output.images):
+        images = []
+        
+        for _ in range((num_images_per_prompt + batch_size - 1) // batch_size):
+            current_batch_size = min(batch_size, num_images_per_prompt - len(images))
+            if seed is not None:
+                generator = torch.Generator(device=pipeline.device).manual_seed(seed)
+            else:
+                generator = None
+
+            output = pipeline(
+                prompt=prompt,
+                guidance_scale=3.5,
+                height=h,
+                width=w,
+                num_inference_steps=inference_steps,
+                max_sequence_length=max_sequence_length,
+                num_images_per_prompt=current_batch_size,
+                generator=generator
+            )
+            images.extend(output.images)      
+
+        for img_id, image in enumerate(images):
             image.save(os.path.join(output_dir, f"{idx}_{img_id}.png"))
 
 def parse_args():
